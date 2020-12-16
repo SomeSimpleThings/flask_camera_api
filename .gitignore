@@ -1,0 +1,6 @@
+# Project exclude paths
+/venv/
+/static/image.png
+__pycache__/
+venv/
+.idea/
