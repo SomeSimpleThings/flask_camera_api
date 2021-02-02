@@ -1,12 +1,13 @@
 import os
 import picamera
-from flask import Flask, render_template, redirect, url_for, request, send_file, make_response, jsonify, abort
+from flask import Flask, render_template, send_file, make_response, jsonify
 from flask_bootstrap import Bootstrap
 
 from vars import API_V1
 
 app = Flask(__name__)
 Bootstrap(app)
+camera = picamera.PiCamera()
 
 
 @app.route('/')
@@ -14,7 +15,7 @@ def index():
     return render_template('index.html')
 
 
-@app.route(f'{API_V1}photos/', methods=['GET'])
+@app.route(f'/photos/', methods=['GET'])
 def get_photos():
     filename = 'static/image.png'
     camera.start_preview()
@@ -53,5 +54,4 @@ def not_found(error):
 
 
 if __name__ == '__main__':
-    camera = picamera.PiCamera()
     app.run('0.0.0.0')
