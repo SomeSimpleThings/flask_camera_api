@@ -16,7 +16,7 @@ def index():
     return render_template('index.html')
 
 
-@app.route('/photo/', methods=['GET'])
+@app.route(f'{API_V1}photos/', methods=['GET'])
 def get_photos():
     filename = 'static/image.png'
     camera.start_preview()
@@ -25,7 +25,7 @@ def get_photos():
     return send_file(filename, mimetype='image/png')
 
 
-@app.route(f'{API_V1}photos/<int:photo_id>', methods=['GET'])
+@app.route(f'{API_V1}photos/<int:photo_id>/', methods=['GET'])
 def get_photo(photo_id):
     pass
 
@@ -39,12 +39,12 @@ def get_photo(photo_id):
 #     return send_file(filename, mimetype='image/png')
 
 
-@app.route(f'{API_V1}photos/<int:photo_id>', methods=['PUT'])
+@app.route(f'{API_V1}photos/<int:photo_id>/', methods=['PUT'])
 def update_photo(photo_id):
     pass
 
 
-@app.route(f'{API_V1}photos/<int:photo_id>', methods=['DELETE'])
+@app.route(f'{API_V1}photos/<int:photo_id>/', methods=['DELETE'])
 def delete_photo(photo_id):
     return jsonify({'result': True})
 
