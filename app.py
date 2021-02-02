@@ -26,7 +26,7 @@ def get_photos():
         time.sleep(2)
         camera.capture(my_stream, 'png')
     my_stream.seek(0)
-    return send_file(my_stream,
+    return send_file(io.BytesIO(my_stream.read()),
                      attachment_filename='photo.png',
                      as_attachment=True,
                      mimetype='image/png')
