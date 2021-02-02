@@ -33,7 +33,7 @@ def create_photo():
     filename = 'static/image.png'
     camera.start_preview()
     camera.capture(filename)
-    camera.close()
+    # camera.close()
     return send_file(filename, mimetype='image/png')
 
 
