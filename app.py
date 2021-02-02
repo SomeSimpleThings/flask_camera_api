@@ -26,7 +26,10 @@ def get_photos():
         time.sleep(2)
         camera.capture(my_stream, 'png')
     my_stream.seek(0)
-    return send_file(my_stream.read(), mimetype='image/png')
+    return send_file(my_stream.read(),
+                     attachment_filename='photo.png',
+                     as_attachment=True,
+                     mimetype='image/png')
 
 
 @app.route(f'{API_V1}photos/<int:photo_id>/', methods=['GET'])
