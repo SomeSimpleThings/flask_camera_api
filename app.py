@@ -26,7 +26,7 @@ def get_photo(photo_id):
     pass
 
 
-@app.route(f'{API_V1}photos', methods=['POST'])
+@app.route(f'{API_V1}photos', methods=['GET'])
 def create_photo():
     filename = 'static/image.png'
     camera.start_preview()
