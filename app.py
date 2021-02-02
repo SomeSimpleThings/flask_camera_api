@@ -1,5 +1,8 @@
+import io
 import os
 import picamera
+import time
+
 from flask import Flask, render_template, send_file, make_response, jsonify
 from flask_bootstrap import Bootstrap
 
@@ -7,7 +10,6 @@ from vars import API_V1
 
 app = Flask(__name__)
 Bootstrap(app)
-camera = picamera.PiCamera()
 
 
 @app.route('/')
@@ -15,13 +17,16 @@ def index():
     return render_template('index.html')
 
 
-@app.route(f'/photos/', methods=['GET'])
+@app.route(f'{API_V1}photos/', methods=['GET'])
 def get_photos():
-    filename = 'static/image.png'
-    camera.start_preview()
-    camera.capture(filename)
-    camera.close()
-    return send_file(filename, mimetype='image/png')
+    my_stream = io.BytesIO()
+    with picamera.PiCamera() as camera:
+        camera.start_preview()
+        # Camera warm-up time
+        time.sleep(2)
+        camera.capture(my_stream, 'png')
+    my_stream.seek(0)
+    return send_file(my_stream.read(), mimetype='image/png')
 
 
 @app.route(f'{API_V1}photos/<int:photo_id>/', methods=['GET'])
@@ -31,11 +36,14 @@ def get_photo(photo_id):
 
 @app.route(f'{API_V1}photos/', methods=['POST'])
 def create_photo():
-    filename = 'static/image.png'
-    camera.start_preview()
-    camera.capture(filename)
-    # camera.close()
-    return send_file(filename, mimetype='image/png')
+    my_stream = io.BytesIO()
+    with picamera.PiCamera() as camera:
+        camera.start_preview()
+        # Camera warm-up time
+        time.sleep(2)
+        camera.capture(my_stream, 'png')
+    my_stream.seek(0)
+    return send_file(my_stream.read(), mimetype='image/png')
 
 
 @app.route(f'{API_V1}photos/<int:photo_id>/', methods=['PUT'])
