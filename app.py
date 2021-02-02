@@ -5,11 +5,6 @@ from flask_bootstrap import Bootstrap
 
 from vars import API_V1
 
-app = Flask(__name__)
-Bootstrap(app)
-
-camera = picamera.PiCamera()
-
 
 @app.route('/')
 def index():
@@ -55,4 +50,7 @@ def not_found(error):
 
 
 if __name__ == '__main__':
+    app = Flask(__name__)
+    Bootstrap(app)
+    camera = picamera.PiCamera()
     app.run('0.0.0.0')
