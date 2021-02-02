@@ -28,13 +28,13 @@ def get_photo(photo_id):
     pass
 
 
-# @app.route(f'{API_V1}photos', methods=['POST'])
-# def create_photo():
-#     filename = 'static/image.png'
-#     camera.start_preview()
-#     camera.capture(filename)
-#     camera.close()
-#     return send_file(filename, mimetype='image/png')
+@app.route(f'{API_V1}photos/', methods=['POST'])
+def create_photo():
+    filename = 'static/image.png'
+    camera.start_preview()
+    camera.capture(filename)
+    camera.close()
+    return send_file(filename, mimetype='image/png')
 
 
 @app.route(f'{API_V1}photos/<int:photo_id>/', methods=['PUT'])
