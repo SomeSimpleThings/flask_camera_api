@@ -16,7 +16,7 @@ def index():
     return render_template('index.html')
 
 
-@app.route(f'{API_V1}photos', methods=['GET'])
+@app.route('/photo/', methods=['GET'])
 def get_photos():
     filename = 'static/image.png'
     camera.start_preview()
