@@ -12,6 +12,18 @@ app = Flask(__name__)
 Bootstrap(app)
 
 
+def take_photo():
+    stream = io.BytesIO()
+    with picamera.PiCamera() as camera:
+        camera.start_preview()
+        # Camera warm-up time
+        time.sleep(2)
+        camera.capture(stream, 'png')
+        camera.stop_preview()
+    stream.seek(0)
+    return stream
+
+
 @app.route('/')
 def index():
     return render_template('index.html')
@@ -19,15 +31,7 @@ def index():
 
 @app.route(f'{API_V1}photos/', methods=['GET'])
 def get_photos():
-    my_stream = io.BytesIO()
-    with picamera.PiCamera() as camera:
-        camera.start_preview()
-        # Camera warm-up time
-        time.sleep(2)
-        camera.capture(my_stream, 'png')
-        camera.stop_preview()
-    my_stream.seek(0)
-    return send_file(my_stream,
+    return send_file(take_photo(),
                      attachment_filename='photo.png',
                      as_attachment=True,
                      mimetype='image/png')
@@ -40,15 +44,7 @@ def get_photo(photo_id):
 
 @app.route(f'{API_V1}photos/', methods=['POST'])
 def create_photo():
-    my_stream = io.BytesIO()
-    with picamera.PiCamera() as camera:
-        camera.start_preview()
-        # Camera warm-up time
-        time.sleep(2)
-        camera.capture(my_stream, 'png')
-        camera.stop_preview()
-    my_stream.seek(0)
-    return send_file(my_stream,
+    return send_file(take_photo(),
                      attachment_filename='photo.png',
                      as_attachment=True,
                      mimetype='image/png')
