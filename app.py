@@ -25,6 +25,7 @@ def get_photos():
         # Camera warm-up time
         time.sleep(2)
         camera.capture(my_stream, 'png')
+        camera.stop_preview()
     my_stream.seek(0)
     return send_file(my_stream,
                      attachment_filename='photo.png',
@@ -45,6 +46,7 @@ def create_photo():
         # Camera warm-up time
         time.sleep(2)
         camera.capture(my_stream, 'png')
+        camera.stop_preview()
     my_stream.seek(0)
     return send_file(my_stream,
                      attachment_filename='photo.png',
